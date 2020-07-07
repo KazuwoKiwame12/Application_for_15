@@ -30,34 +30,6 @@ void getCurrentDirectory(char *currentDirectory) {
 	GetCurrentDirectory(CHARBUFF, currentDirectory);
 };
 
-bool writeChar(const char *section, const char *keyword, const char *returnValue, const char *filePath) {
-	return WritePrivateProfileString(section, keyword, returnValue, filePath);
-};
-
-bool writeInt(const char *section, const char *keyword, int returnValue, const char *filePath) {
-	char buf[CHARBUFF];
-	sprintf_s(buf, "%d", returnValue);
-	if (WritePrivateProfileString(section, keyword, buf, filePath)) {
-		return true;
-	}
-	else {
-		//fprintf(stderr, "failed to write [$s] %s to %s \n", section, keyword, filePath);
-		return false;
-	}
-};
-
-bool writeDouble(const char *section, const char *keyword, double returnValue, const char *filePath) {
-	char buf[CHARBUFF];
-	sprintf_s(buf, "%f", returnValue);
-	if (WritePrivateProfileString(section, keyword, buf, filePath)) {
-		return true;
-	}
-	else {
-		//fprintf(stderr, "failed to write [$s] %s to %s \n", section, keyword, filePath);
-		return false;
-	}
-};
-
 void getVectors(char importFile[BUFFSIZE], float** first_vectors, float** second_vectors, learnModel model) {
 	char lineData[BUFFSIZE];
 	int index_1 = 0, index_2 = 0, j = 0;
@@ -110,6 +82,31 @@ void getTestData(float* vector, learnModel model) {
 				fprintf_s(stdout, "\n");
 			}
 		}
+		fclose(fp);
+	}
+}
+
+void writeResult(float correctRate, float *test_vector, char *result, learnModel model) {
+	FILE *fp;
+	errno_t error;
+	char params[BUFFSIZE];
+	char temp[CHARBUFF];
+	int i;
+
+	error = fopen_s(&fp, "result.txt", "w");
+	if (error == 0)
+	{
+		fprintf_s(fp, "äwèKåWêî: %f\n", model.coefficient);
+		fprintf_s(fp, "äwèKâÒêî: %d\n", model.learnNum);
+		
+		for (i = 0; i < model.featureNum; i++) {
+			sprintf_s(temp, "%f\t", model.params[i]);
+			strcat_s(params, temp);
+		}
+		
+		fprintf_s(fp, "èdÇ›: %s\n", params);
+		fprintf_s(fp, "ê≥âó¶: %f\n", correctRate);
+		fprintf_s(fp, "****äwèKåãâ *****\nì¸óÕÇ≥ÇÍÇΩtestÉfÅ[É^ÇÕÅA %sÇ∆îªífÇ≥ÇÍÇ‹ÇµÇΩ!!!", result);
 		fclose(fp);
 	}
 }
