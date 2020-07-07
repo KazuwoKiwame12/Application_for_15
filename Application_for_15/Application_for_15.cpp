@@ -105,7 +105,7 @@ int main()
 	fprintf_s(stdout, "\nクラス分類の結果: %s", result);
 
 	/***4: 結果をresult.txtに書き込む(学習モデル、分類結果)***/
-
+	writeResult(correctRate,test_vector,result, model);
 
 
 	free(first_vector);
