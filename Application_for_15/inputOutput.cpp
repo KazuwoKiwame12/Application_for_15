@@ -93,6 +93,27 @@ void getVectors(char importFile[BUFFSIZE], float** first_vectors, float** second
 	}
 }
 
+void getTestData(float* vector, learnModel model) {
+	char lineData[BUFFSIZE];
+	int index_1 = 0, index_2 = 0, j = 0;
+	FILE *fp;
+	errno_t error;
+	error = fopen_s(&fp, "test.txt", "r");
+	if (error == 0)
+	{
+		while (fgets(lineData, BUFFSIZE, fp) != NULL) {
+			if (index_1 < model.teacherNum) {
+				strPicker(lineData, vector);
+				for (j = 0; j < 5; j++) {
+					fprintf_s(stdout, "%f\t", vector[j]);
+				}
+				fprintf_s(stdout, "\n");
+			}
+		}
+		fclose(fp);
+	}
+}
+
 void strPicker(char *lineData, float *temp) {
 	char *character_line;
 	char delim[] = " ";

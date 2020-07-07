@@ -7,4 +7,5 @@ bool writeInt(const char *section, const char *keyword, int returnValue, const c
 bool writeChar(const char *section, const char *keyword, const char *returnValue, const char *filePath);
 bool writeDouble(const char *section, const char *keyword, double returnValue, const char *filePath);
 void getVectors(char importFile[BUFFSIZE], float** first_vectors, float** second_vectors, learnModel model);
+void getTestData(float* vector, learnModel model);
 void strPicker(char *lineData, float *temp);
