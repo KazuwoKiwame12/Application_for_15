@@ -8,7 +8,7 @@ struct learnModel {
 	int learnNum;
 	int featureNum;
 	int teacherNum;
-	double coefficient;
+	float coefficient;
 	float *params;
 };
 

@@ -46,7 +46,7 @@ int main()
 	model.learnNum = readInt(section1, key4, 30, settingFile);
 	model.featureNum = readInt(section1, key5, 5, settingFile);
 	model.teacherNum = readInt(section1, key6, 50, settingFile);
-	model.coefficient = readDouble(section1, key7, 0.1, settingFile);
+	model.coefficient = (float)readDouble(section1, key7, 0.1, settingFile);
 	model.params = (float*)malloc(sizeof(float *)*model.featureNum);//注意
 
 	int i, j;
@@ -74,12 +74,35 @@ int main()
 		for (j = 0; j<model.featureNum; j++) {
 			fprintf_s(stdout, "%f\t", second_vectors[i][j]);
 		}
+		fprintf_s(stdout, "\n");
 	}
-	/****2: 学習(パーセプトロン則)する****/
+
+
+	/****2: 学習する****/
+	fprintf_s(stdout, "\nパラメータ_計算前");
+	for (i = 0; i < model.featureNum; i++) {
+		model.params[i] = ((float)rand() / RAND_MAX) - 0.5;
+		fprintf_s(stdout, "%f\t", model.params[i]);
+	}
+
+	learnPerceptron(first_vectors, second_vectors, model);
+	fprintf_s(stdout, "\nパラメータ_計算後:");
+	for (i = 0; i < model.featureNum; i++) fprintf_s(stdout, "%f\t", model.params[i]);
 	
 
 	/***3: 学習して生まれたモデルを用いて、結果を出力する***/
-
+	/*モデルの評価*/
+	float correctRate;
+	correctRate = evaluateModel(model.params, first_vectors, second_vectors, model);
+	fprintf_s(stdout, "\n正解率: %f", correctRate);
+	/*分類したいデータを分類した結果*/
+	float *test_vector;
+	char result[CHARBUFF];
+	test_vector = (float*)malloc(sizeof(float *)*model.featureNum);
+	getTestData(test_vector, model);
+	if(calculation(model.params, test_vector, model.featureNum) >= 0.0) readChar(section1, key2, "none", result, settingFile);
+	else readChar(section1, key3, "none", result, settingFile);
+	fprintf_s(stdout, "\nクラス分類の結果: %s", result);
 
 	/***4: 結果をresult.txtに書き込む(学習モデル、分類結果)***/
 
