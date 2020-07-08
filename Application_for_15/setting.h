@@ -9,7 +9,7 @@ struct learnModel {
 	int featureNum;
 	int teacherNum;
 	float coefficient;
-	float *params;
+	float *bias;
 };
 
 #include "inputOutput.h"
