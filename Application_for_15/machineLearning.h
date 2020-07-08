@@ -1,4 +1,4 @@
 #pragma once
-void updateBias(float** first_vectors, float** second_vectors, learnModel model);
+void updateBias(float** firstVectors, float** secondVectors, learnModel model);
 float calculation(float* vectors, learnModel model);
-float evaluateModel(float** first_vectors, float** second_vectors, learnModel model);
+float evaluateModel(float** firstVectors, float** secondVectors, learnModel model);
