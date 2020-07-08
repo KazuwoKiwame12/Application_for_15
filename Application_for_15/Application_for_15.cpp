@@ -18,27 +18,27 @@ void finish();
 int main()
 {
 	/*
-	ˆ—‚Ì—¬‚ê‚Æ‚µ‚ÄA
-	0: ƒAƒvƒŠ‚Ìà–¾
-	1: ƒf[ƒ^‚ğ“Ç‚İ‚Ş(setting.ini‚Æiris.txt‚©‚ç)
-	2: ŠwK‚·‚é
-	3: ŠwK‚µ‚Ä‚Å‚«‚½•ª—Şƒ‚ƒfƒ‹‚ğ—p‚¢‚ÄA•]‰¿Œ‹‰Ê‚Æ•ª—ŞŒ‹‰Ê‚ğo—Í‚·‚é
-	4: Œ‹‰Ê‚ğresult.txt‚É‘‚«‚Ş(ŠwKƒ‚ƒfƒ‹A•ª—ŞŒ‹‰Ê)
+	å‡¦ç†ã®æµã‚Œã¨ã—ã¦ã€
+	0: ã‚¢ãƒ—ãƒªã®èª¬æ˜
+	1: ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€(setting.iniã¨iris.txtã‹ã‚‰)
+	2: å­¦ç¿’ã™ã‚‹
+	3: å­¦ç¿’ã—ã¦ã§ããŸåˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ç”¨ã„ã¦ã€è©•ä¾¡çµæœã¨åˆ†é¡çµæœã‚’å‡ºåŠ›ã™ã‚‹
+	4: çµæœã‚’result.txtã«æ›¸ãè¾¼ã‚€(å­¦ç¿’ãƒ¢ãƒ‡ãƒ«ã€åˆ†é¡çµæœ)
 	*/
 	
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~0: ƒAƒvƒŠ‚Ìà–¾ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~0: ã‚¢ãƒ—ãƒªã®èª¬æ˜ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	explain();
 
 
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~1:ƒf[ƒ^‚ğ“Ç‚İ‚Ş ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	/*\‘¢‘Ì‚ÌéŒ¾*/
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~1:ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	/*æ§‹é€ ä½“ã®å®£è¨€*/
 	learnModel model;
-	/*ƒpƒX‚Ìæ“¾*/
+	/*ãƒ‘ã‚¹ã®å–å¾—*/
 	char currentDirectory[CHARBUFF];
 	getCurrentDirectory(currentDirectory);
 	char settingFile[CHARBUFF];
 	sprintf_s(settingFile, "%s\\setting.ini", currentDirectory);
-	/*ƒZƒNƒVƒ‡ƒ“‚ÆƒL[‚Ìİ’è*/
+	/*ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã¨ã‚­ãƒ¼ã®è¨­å®š*/
 	char section1[CHARBUFF];
 	sprintf_s(section1, "Learning");
 	char key0[CHARBUFF];
@@ -57,7 +57,7 @@ int main()
 	sprintf_s(key6, "teacherNum");
 	char key7[CHARBUFF];
 	sprintf_s(key7, "coefficient");
-	/*iniƒtƒ@ƒCƒ‹‚©‚ç‚Ì“Ç‚İ‚İ‚Æ‘ã“ü*/
+	/*iniãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã®èª­ã¿è¾¼ã¿ã¨ä»£å…¥*/
 	char firstFile[CHARBUFF];
 	char secondFile[CHARBUFF];
 	readChar(section1, key0, "firstClass.txt", firstFile, settingFile);
@@ -67,65 +67,65 @@ int main()
 	model.teacherNum = readInt(section1, key6, 50, settingFile);
 	model.coefficient = (float)readDouble(section1, key7, 0.1, settingFile);	
 	model.bias = (float*)malloc(sizeof(float *)*(model.featureNum + 1));
-	heapCheckOne(model.bias, "setting.ini‚ÌfeatureNum‚Ì’l‚ğ¬‚³‚­‚µ‚Ä‚­‚¾‚³‚¢B");
-	/*setting.ini‚É‹LÚ‚³‚ê‚½—v‘f”‚Æ‹³t”•ª‚Ì
-	”z—ñ‚ğ“®“I‚Éæ“¾‚·‚é*/
+	heapCheckOne(model.bias, "setting.iniã®featureNumã®å€¤ã‚’å°ã•ãã—ã¦ãã ã•ã„ã€‚");
+	/*setting.iniã«è¨˜è¼‰ã•ã‚ŒãŸè¦ç´ æ•°ã¨æ•™å¸«æ•°åˆ†ã®
+	é…åˆ—ã‚’å‹•çš„ã«å–å¾—ã™ã‚‹*/
 	float **firstVectors, *firstVector;
 	float **secondVectors, *secondVector;
 	firstVectors = (float**)malloc(sizeof(float *)*model.teacherNum);
 	secondVectors = (float**)malloc(sizeof(float *)*model.teacherNum);
 	firstVector = (float*)malloc(sizeof(float *)*model.teacherNum*model.featureNum);
 	secondVector = (float*)malloc(sizeof(float *)*model.teacherNum*model.featureNum);
-	heapCheckOne(firstVector, "setting.ini‚ÌfeatureNum‚Ì’l‚ğ¬‚³‚­‚µ‚Ä‚­‚¾‚³‚¢B");
-	heapCheckOne(secondVector, "setting.ini‚ÌfeatureNum‚Ì’l‚ğ¬‚³‚­‚µ‚Ä‚­‚¾‚³‚¢B");
-	heapCheckDouble(firstVectors, "setting.ini‚ÌteacherNum‚Ì’l‚ğ¬‚³‚­‚µ‚Ä‚­‚¾‚³‚¢B");
-	heapCheckDouble(secondVectors, "setting.ini‚ÌteacherNum‚Ì’l‚ğ¬‚³‚­‚µ‚Ä‚­‚¾‚³‚¢B");
+	heapCheckOne(firstVector, "setting.iniã®featureNumã®å€¤ã‚’å°ã•ãã—ã¦ãã ã•ã„ã€‚");
+	heapCheckOne(secondVector, "setting.iniã®featureNumã®å€¤ã‚’å°ã•ãã—ã¦ãã ã•ã„ã€‚");
+	heapCheckDouble(firstVectors, "setting.iniã®teacherNumã®å€¤ã‚’å°ã•ãã—ã¦ãã ã•ã„ã€‚");
+	heapCheckDouble(secondVectors, "setting.iniã®teacherNumã®å€¤ã‚’å°ã•ãã—ã¦ãã ã•ã„ã€‚");
 	
 	int i;
 	for (i = 0; i<model.teacherNum; i++) {
 		firstVectors[i] = firstVector + i * model.featureNum;
 		secondVectors[i] = secondVector + i * model.featureNum;
 	}
-	/*firstClass, secondClass‚©‚ç‚Ìƒf[ƒ^“Ç‚İ‚İ*/
+	/*firstClass, secondClassã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿*/
 	getClassDatas(firstFile, secondFile, firstVectors, secondVectors, model);
 
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~2: ŠwK‚·‚é ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	/*‰Šúd‚İ•Ï”Œˆ’è*/
-	startSentence("ŠwK‚·‚é_ƒp[ƒZƒvƒgƒƒ“‘¥");
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~2: å­¦ç¿’ã™ã‚‹ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	/*åˆæœŸé‡ã¿å¤‰æ•°æ±ºå®š*/
+	startSentence("å­¦ç¿’ã™ã‚‹_ãƒ‘ãƒ¼ã‚»ãƒ—ãƒˆãƒ­ãƒ³å‰‡");
 	for (i = 0; i < model.featureNum + 1; i++) model.bias[i] = ((float)rand() / RAND_MAX) - (float)0.5;
-	/*Å“K‚Èd‚İ•Ï”‚ğŠwK*/
+	/*æœ€é©ãªé‡ã¿å¤‰æ•°ã‚’å­¦ç¿’*/
 	updateBias(firstVectors, secondVectors, model);
-	startSentence("ŠwKŠ®—¹");
-	fprintf_s(stdout, "\nŠwKI—¹Œã‚Ìd‚İ•Ï”:");
+	startSentence("å­¦ç¿’å®Œäº†");
+	fprintf_s(stdout, "\nå­¦ç¿’çµ‚äº†å¾Œã®é‡ã¿å¤‰æ•°:");
 	for (i = 0; i < model.featureNum + 1; i++) fprintf_s(stdout, "w%d: %f\t", i, model.bias[i]);
 	fprintf_s(stdout, "\n");
 	endSentence();
 
 
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~3:ŠwK‚µ‚Ä‚Å‚«‚½•ª—Şƒ‚ƒfƒ‹‚ğ—p‚¢‚ÄA•]‰¿Œ‹‰Ê‚Æ•ª—ŞŒ‹‰Ê‚ğo—Í‚·‚é ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	/*ƒ‚ƒfƒ‹‚Ì•]‰¿*/
-	startSentence("•ª—Şƒ‚ƒfƒ‹‚Ì•]‰¿");
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~3:å­¦ç¿’ã—ã¦ã§ããŸåˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ç”¨ã„ã¦ã€è©•ä¾¡çµæœã¨åˆ†é¡çµæœã‚’å‡ºåŠ›ã™ã‚‹ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	/*ãƒ¢ãƒ‡ãƒ«ã®è©•ä¾¡*/
+	startSentence("åˆ†é¡ãƒ¢ãƒ‡ãƒ«ã®è©•ä¾¡");
 	float correctRate;
 	correctRate = evaluateModel(firstVectors, secondVectors, model);
 	endSentence();
-	/*•ª—Ş‚µ‚½‚¢ƒf[ƒ^‚ğ•ª—Ş‚µ‚½Œ‹‰Ê*/
-	startSentence("•ª—ŞŒ‹‰Ê");
+	/*åˆ†é¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ã‚’åˆ†é¡ã—ãŸçµæœ*/
+	startSentence("åˆ†é¡çµæœ");
 	float *test_vector;
 	char result[CHARBUFF];
 	test_vector = (float*)malloc(sizeof(float *)*model.featureNum);
 	getTestData(test_vector, model);
 	if (calculation(test_vector, model) >= 0.0) readChar(section1, key2, "none", result, settingFile);
 	else readChar(section1, key3, "none", result, settingFile);
-	fprintf_s(stdout, "\nƒNƒ‰ƒX•ª—Ş‚ÌŒ‹‰Ê: %s\n", result);
+	fprintf_s(stdout, "\nã‚¯ãƒ©ã‚¹åˆ†é¡ã®çµæœ: %s\n", result);
 	endSentence();
 
 
-	/***4: Œ‹‰Ê‚ğresult.txt‚É‘‚«‚Ş(ŠwKƒ‚ƒfƒ‹A•ª—ŞŒ‹‰Ê)***/
-	/*ƒAƒvƒŠ‚ÌI—¹*/
+	/***4: çµæœã‚’result.txtã«æ›¸ãè¾¼ã‚€(å­¦ç¿’ãƒ¢ãƒ‡ãƒ«ã€åˆ†é¡çµæœ)***/
+	/*ã‚¢ãƒ—ãƒªã®çµ‚äº†*/
 	finish();
-	/*ƒtƒ@ƒCƒ‹‚ÉŒ‹‰Ê‚Ì‹L“ü*/
+	/*ãƒ•ã‚¡ã‚¤ãƒ«ã«çµæœã®è¨˜å…¥*/
 	writeResult(correctRate, test_vector, result, model);
-	/*ƒq[ƒv—Ìˆæ‚Ìƒƒ‚ƒŠ‚ÌŠJ•ú*/
+	/*ãƒ’ãƒ¼ãƒ—é ˜åŸŸã®ãƒ¡ãƒ¢ãƒªã®é–‹æ”¾*/
 	free(firstVector);
 	free(firstVectors);
 	free(secondVector);
@@ -137,10 +137,10 @@ int main()
 
 
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ŠÖ”ŒQ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~é–¢æ•°ç¾¤ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void heapCheckOne(float *data, char *str) {
 	if (data == NULL) {
-		fprintf_s(stdout, "d‚İ•t‚¯•Ï”‚Ìƒƒ‚ƒŠŠm•Û‚É¸”s‚µ‚Ü‚µ‚½B%sB\n", str);
+		fprintf_s(stdout, "é‡ã¿ä»˜ã‘å¤‰æ•°ã®ãƒ¡ãƒ¢ãƒªç¢ºä¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚%sã€‚\n", str);
 		finish();
 		exit(0);
 	}
@@ -148,7 +148,7 @@ void heapCheckOne(float *data, char *str) {
 
 void heapCheckDouble(float **data, char *str) {
 	if (data == NULL) {
-		fprintf_s(stdout, "d‚İ•t‚¯•Ï”‚Ìƒƒ‚ƒŠŠm•Û‚É¸”s‚µ‚Ü‚µ‚½B%s\n", str);
+		fprintf_s(stdout, "é‡ã¿ä»˜ã‘å¤‰æ•°ã®ãƒ¡ãƒ¢ãƒªç¢ºä¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚%s\n", str);
 		finish();
 		exit(0);
 	}
@@ -159,15 +159,15 @@ void startSentence(char *str) {
 }
 
 void endSentence() {
-	fprintf_s(stdout, "***************************************************************\n«\n«\n");
+	fprintf_s(stdout, "***************************************************************\nâ†“\nâ†“\n");
 }
 
 void explain() {
-	fprintf_s(stdout, "********2ƒNƒ‰ƒX•ª—Ş‚ğs‚¤•ªÍƒc[ƒ‹ƒAƒvƒŠ********\n");
-	fprintf_s(stdout, "‚±‚ÌƒAƒvƒŠ‚Å‚ÍAˆÈ‰º‚Ì‚±‚Æ‚ğs‚¤\n");
-	fprintf_s(stdout, "2‚Â‚ÌƒNƒ‰ƒX‚Ì‹³tƒf[ƒ^‚©‚çÅ“K‚È•ª—Şƒ‚ƒfƒ‹‚ğì¬‚·‚é\n");
-	fprintf_s(stdout, "‚»‚µ‚ÄA‚»‚Ì•ª—Şƒ‚ƒfƒ‹‚ğ—p‚¢‚ÄAƒ†[ƒU‚ªİ’è‚µ‚½“ü—Íƒf[ƒ^‚ğ•ª—Ş‚·‚éB\n");
-	fprintf_s(stdout, "'A'‚ğ“ü—Í: X‚È‚éà–¾, 'B‚ğ“ü—Í: à–¾‚ğƒXƒLƒbƒv‚µ‚Ä•ª—ŞÀs'\n");
+	fprintf_s(stdout, "********2ã‚¯ãƒ©ã‚¹åˆ†é¡ã‚’è¡Œã†åˆ†æãƒ„ãƒ¼ãƒ«ã‚¢ãƒ—ãƒª********\n");
+	fprintf_s(stdout, "ã“ã®ã‚¢ãƒ—ãƒªã§ã¯ã€ä»¥ä¸‹ã®ã“ã¨ã‚’è¡Œã†\n");
+	fprintf_s(stdout, "2ã¤ã®ã‚¯ãƒ©ã‚¹ã®æ•™å¸«ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰æœ€é©ãªåˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆã™ã‚‹\n");
+	fprintf_s(stdout, "ãã—ã¦ã€ãã®åˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ç”¨ã„ã¦ã€ãƒ¦ãƒ¼ã‚¶ãŒè¨­å®šã—ãŸå…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ†é¡ã™ã‚‹ã€‚\n");
+	fprintf_s(stdout, "'A'ã‚’å…¥åŠ›: æ›´ãªã‚‹èª¬æ˜, 'Bã‚’å…¥åŠ›: èª¬æ˜ã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ã¦åˆ†é¡å®Ÿè¡Œ'\n");
 	char input[CHARBUFF];
 	bool moreExplain = true;
 	while (1) {
@@ -181,40 +181,40 @@ void explain() {
 			break;
 		}
 		else {
-			fprintf_s(stdout, "'A'‚à‚µ‚­‚Í, 'B'‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+			fprintf_s(stdout, "'A'ã‚‚ã—ãã¯, 'B'ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
 		}
 	}
-	/*Ú×à–¾*/
-	fprintf_s(stdout, "«\n«\n");
+	/*è©³ç´°èª¬æ˜*/
+	fprintf_s(stdout, "â†“\nâ†“\n");
 	if (moreExplain) {
-		fprintf_s(stdout, "ƒAƒvƒŠ‚ÌÚ×à–¾\n");
-		fprintf_s(stdout, "ƒAƒvƒŠ‚Ìd—l‚ÍAˆÈ‰º‚Ì’Ê‚è‚Å‚ ‚éB\n");
-		fprintf_s(stdout, "\t2‚Â‚ÌƒNƒ‰ƒX‚Ì‹³tƒf[ƒ^‚©‚çÅ“K‚È•ª—Şƒ‚ƒfƒ‹‚ğì¬‚·‚éB\n");
-		fprintf_s(stdout, "\t‚»‚µ‚ÄA‚»‚Ì•ª—Şƒ‚ƒfƒ‹‚ğ—p‚¢‚ÄAƒ†[ƒU‚ªİ’è‚µ‚½“ü—Íƒf[ƒ^‚ğ•ª—Ş‚·‚éB\n");
-		startSentence("ƒtƒ@ƒCƒ‹‚É‚Â‚¢‚Ä");
-		fprintf_s(stdout, "—˜—p‚·‚éƒtƒ@ƒCƒ‹: setting.ini, firstClass.txt, secondClass.txt, test.txt\n");
-		fprintf_s(stdout, "Šeƒtƒ@ƒCƒ‹‚Ì’†g‚ğ•ÏX‚µ‚Ä‚à–â‘è‚È‚µB‚µ‚©‚µAsetting.ini‚ÌƒZƒNƒVƒ‡ƒ“‚ÆƒL[‚Í•ÏX•s‰Â\n");
-		fprintf_s(stdout, "setting.ini‚Ì–ğŠ„: ŠwK‚É•K—v‚Èİ’è‚ğ’è‹`‚·‚é\n");
-		fprintf_s(stdout, "\tŠeƒNƒ‰ƒX‚Ì–¼‘O, ŠwK‰ñ”(Å‘å100‰ñ), “Á’¥—Ê, \n");
-		fprintf_s(stdout, "\t1ƒNƒ‰ƒX‚Ì‹³t—Ê, ŠwKŒW”‚È‚Ç‚Ì’l‚ğ‹L“ü‚·‚éB\n");
-		fprintf_s(stdout, "ŠeƒNƒ‰ƒX.txt‚Ì–ğŠ„: ŠwKƒf[ƒ^‚ğİ’è‚·‚é\n");
-		fprintf_s(stdout, "\tŠeƒNƒ‰ƒX‚Ì“Á’¥—Ê‚ğAƒXƒy[ƒX‚ğ‹ó‚¯‚Ä‹L“ü‚·‚éB\n");
-		fprintf_s(stdout, "test.txt‚Ì–ğŠ„: •ª—Ş‚µ‚½‚¢ƒf[ƒ^‚ğİ’è‚·‚é\n");
-		fprintf_s(stdout, "\t•ª—Ş‚µ‚½‚¢ƒf[ƒ^‚Ì“Á’¥—Ê‚ğ‹L“ü‚·‚éB(ˆê‚Â‚¾‚¯)\n");
-		startSentence("•ª—ŞÀs");
-		fprintf_s(stdout, "'A'‚ğ“ü—Í: •ª—ŞÀs\n");
+		fprintf_s(stdout, "ã‚¢ãƒ—ãƒªã®è©³ç´°èª¬æ˜\n");
+		fprintf_s(stdout, "ã‚¢ãƒ—ãƒªã®ä»•æ§˜ã¯ã€ä»¥ä¸‹ã®é€šã‚Šã§ã‚ã‚‹ã€‚\n");
+		fprintf_s(stdout, "\t2ã¤ã®ã‚¯ãƒ©ã‚¹ã®æ•™å¸«ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰æœ€é©ãªåˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆã™ã‚‹ã€‚\n");
+		fprintf_s(stdout, "\tãã—ã¦ã€ãã®åˆ†é¡ãƒ¢ãƒ‡ãƒ«ã‚’ç”¨ã„ã¦ã€ãƒ¦ãƒ¼ã‚¶ãŒè¨­å®šã—ãŸå…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’åˆ†é¡ã™ã‚‹ã€‚\n");
+		startSentence("ãƒ•ã‚¡ã‚¤ãƒ«ã«ã¤ã„ã¦");
+		fprintf_s(stdout, "åˆ©ç”¨ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«: setting.ini, firstClass.txt, secondClass.txt, test.txt\n");
+		fprintf_s(stdout, "å„ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸­èº«ã‚’å¤‰æ›´ã—ã¦ã‚‚å•é¡Œãªã—ã€‚ã—ã‹ã—ã€setting.iniã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã¨ã‚­ãƒ¼ã¯å¤‰æ›´ä¸å¯\n");
+		fprintf_s(stdout, "setting.iniã®å½¹å‰²: å­¦ç¿’ã«å¿…è¦ãªè¨­å®šã‚’å®šç¾©ã™ã‚‹\n");
+		fprintf_s(stdout, "\tå„ã‚¯ãƒ©ã‚¹ã®åå‰, å­¦ç¿’å›æ•°, ç‰¹å¾´é‡, \n");
+		fprintf_s(stdout, "\t1ã‚¯ãƒ©ã‚¹ã®æ•™å¸«é‡, å­¦ç¿’ä¿‚æ•°ãªã©ã®å€¤ã‚’è¨˜å…¥ã™ã‚‹ã€‚\n");
+		fprintf_s(stdout, "å„ã‚¯ãƒ©ã‚¹.txtã®å½¹å‰²: å­¦ç¿’ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹\n");
+		fprintf_s(stdout, "\tå„ã‚¯ãƒ©ã‚¹ã®ç‰¹å¾´é‡ã‚’ã€ã‚¹ãƒšãƒ¼ã‚¹ã‚’ç©ºã‘ã¦è¨˜å…¥ã™ã‚‹ã€‚\n");
+		fprintf_s(stdout, "test.txtã®å½¹å‰²: åˆ†é¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹\n");
+		fprintf_s(stdout, "\tåˆ†é¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ã®ç‰¹å¾´é‡ã‚’è¨˜å…¥ã™ã‚‹ã€‚(ä¸€ã¤ã ã‘)\n");
+		startSentence("åˆ†é¡å®Ÿè¡Œ");
+		fprintf_s(stdout, "'A'ã‚’å…¥åŠ›: åˆ†é¡å®Ÿè¡Œ\n");
 		while (1) {
 			scanf_s("%s", &input);
 			if (strcmp(input, "A") == 0) break;
-			else fprintf_s(stdout, "'A'‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢\n");
+			else fprintf_s(stdout, "'A'ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„\n");
 		}
 	}
-	fprintf_s(stdout, "«\n«\n«\n");
+	fprintf_s(stdout, "â†“\nâ†“\nâ†“\n");
 }
 
 void finish() {
-	startSentence("ƒAƒvƒŠI—¹");
-	fprintf_s(stdout, "ƒAƒvƒŠ‚ğI—¹‚·‚é‚É‚ÍA‰½‚©‚µ‚ç‚ÌƒL[‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B\n");
+	startSentence("ã‚¢ãƒ—ãƒªçµ‚äº†");
+	fprintf_s(stdout, "ã‚¢ãƒ—ãƒªã‚’çµ‚äº†ã™ã‚‹ã«ã¯ã€ä½•ã‹ã—ã‚‰ã®ã‚­ãƒ¼ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\n");
 	char input[CHARBUFF];
 	scanf_s("%s", &input);
 }
