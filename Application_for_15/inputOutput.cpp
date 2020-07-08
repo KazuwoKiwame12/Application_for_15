@@ -32,7 +32,7 @@ void getCurrentDirectory(char *currentDirectory) {
 
 void fetchFile(char importFile[BUFFSIZE], float** vectors, learnModel model) {
 	char lineData[BUFFSIZE];
-	int index = 0, j = 0;
+	int index = 0;
 	FILE *fp;
 	errno_t error;
 	error = fopen_s(&fp, importFile, "r");
@@ -40,14 +40,7 @@ void fetchFile(char importFile[BUFFSIZE], float** vectors, learnModel model) {
 		fprintf_s(stderr, "failed to open for txt in importFile_%s", importFile);
 	} else {
 		while (fgets(lineData, BUFFSIZE, fp) != NULL) {
-			fprintf_s(stdout, "++++++++++++++テキスト: %s++++++++++++++++++\n", lineData);
-			j = 0;
-			fprintf_s(stdout, "**************%d行目のデータ***************\n", index);
 			strPicker(lineData, vectors[index]);
-			for (j = 0; j < model.featureNum; j++) {
-				fprintf_s(stdout, "%f\t", vectors[index][j]);
-			}
-			fprintf_s(stdout, "\n");
 			index++;
 		}
 		fclose(fp);
@@ -72,8 +65,6 @@ void getTestData(float* vector, learnModel model) {
 	else {
 		while (fgets(lineData, BUFFSIZE, fp) != NULL) {
 			strPicker(lineData, vector);
-			for (j = 0; j <model.featureNum; j++) fprintf_s(stdout, "%f\t", vector[j]);
-			fprintf_s(stdout, "\n");
 		}
 		fclose(fp);
 	}
@@ -91,29 +82,25 @@ void writeResult(float correctRate, float *test_vector, char *result, learnModel
 		fprintf_s(fp, "学習回数: %d\n", model.learnNum);
 		fprintf_s(fp, "重み:\n");
 		for (i = 0; i < model.featureNum+1; i++) {
-			fprintf_s(fp, "\tw%d = %f\n", i, model.params[i]);
+			fprintf_s(fp, "\tw%d = %f\n", i, model.bias[i]);
 		}
 		fprintf_s(fp, "正解率: %f\n", correctRate);
-		fprintf_s(fp, "****学習結果*****\n入力されたtestデータは、 %sと判断されました!!!", result);
+		fprintf_s(fp, "****分類結果*****\n入力されたtestデータは、 %sと判断されました!!!", result);
 		fclose(fp);
 	}
 }
 
-void strPicker(char *lineData, float *temp) {
+void strPicker(char *lineData, float *vector) {
 	char *character_line;
 	char delim[] = " ";
 	char *ctx;
-	int count, i;
-	count = 0; i = 0;
+	int i;
+	i = 0;
 
 	character_line = strtok_s(lineData, delim, &ctx);
 	while (character_line != NULL) {
-		fprintf_s(stdout, "＊＊＊＊＊取得データ%d番＊＊＊＊＊\n", count);
-		fprintf_s(stdout, "%s\n", character_line);
-		*(temp + i) = strtof(character_line,NULL);
-		fprintf_s(stdout, "数字:%lf\n", *(temp + i));
+		*(vector + i) = strtof(character_line,NULL);
 		character_line = strtok_s(NULL, delim, &ctx);
 		i++;
-		count++;
 	}
 }
