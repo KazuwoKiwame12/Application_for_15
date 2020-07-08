@@ -100,13 +100,21 @@ void strPicker(char *lineData, float *vector) {
 	char *character_line;
 	char delim[] = " ";
 	char *ctx;
+	char *error;
 	int i;
 	i = 0;
 
 	character_line = strtok_s(lineData, delim, &ctx);
 	while (character_line != NULL) {
 		try {
-			*(vector + i) = strtof(character_line, NULL);
+			*(vector + i) = strtof(character_line, &error);
+			if (character_line == error) {
+				fprintf_s(stdout, "学習する教師データに文字列: %sが混じっています。編集してください！\n", error);
+				fprintf_s(stdout, "アプリを終了するには、何かしらのキーを入力してください。\n");
+				char input[CHARBUFF];
+				scanf_s("%s", &input);
+				exit(0);
+			}
 			character_line = strtok_s(NULL, delim, &ctx);
 			i++;
 		}
